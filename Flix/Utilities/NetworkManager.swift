@@ -20,7 +20,7 @@ class NetworkManager {
         let task = URLSession.shared.dataTask(with: URLRequest(url: URL(string: baseURL)!)) { data, res, err in
             
             guard let data = data, err == nil else {
-                completion(.failure(.invalidData))
+                completion(.failure(.INVALID_DATA))
                 return
             }
             
@@ -29,7 +29,7 @@ class NetworkManager {
                 completion(.success(ans.results))
                 return
             } catch {
-                completion(.failure(.unableToDecode))
+                completion(.failure(.UNABLE_TO_DECODE))
                 return
             }
             
@@ -38,33 +38,56 @@ class NetworkManager {
         task.resume()
     }
     
-    func getPoserImage(imagePath: String, completion: @escaping(Result<UIImage, MovieError>) -> Void) {
+    func getBackdropImage(imagePath: String, completion: @escaping(Result<UIImage, MovieError>) -> Void) {
         let url = baseUrlForImage + imagePath
         let req = URLRequest(url: URL(string: url)!)
         
         let task = URLSession.shared.dataTask(with: req) { data, res, err in
             
             guard err == nil else {
-                completion(.failure(.invalidResponse))
+                completion(.failure(.INVALID_RESPONSE))
                 return
             }
             
             guard let data = data else {
-                completion(.failure(.invalidData))
+                completion(.failure(.INVALID_DATA))
                 return
             }
             
             // Create the image
             guard let loadedImage = UIImage(data: data) else {
-                completion(.failure(.unableToCreateImage))
+                completion(.failure(.UNABLE_TO_CREATE_IMAGE))
                 return
             }
             
             completion(.success(loadedImage))
-            
-            
         }
         
+        task.resume()
+    }
+    
+    func getPosterImage(posterURL: String, completion: @escaping(Result<UIImage, MovieError>) -> Void) {
+        let url = URL(string: baseUrlForImage + posterURL)!
+        let req = URLRequest(url: url)
+        
+        let task = URLSession.shared.dataTask(with: req) { data, res, err in
+            guard err == nil else {
+                completion(.failure(.INVALID_RESPONSE))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.INVALID_DATA))
+                return
+            }
+            
+            guard let loadedImage = UIImage(data: data) else {
+                completion(.failure(.UNABLE_TO_CREATE_IMAGE))
+                return
+            }
+            
+            completion(.success(loadedImage))
+        }
         task.resume()
     }
 }

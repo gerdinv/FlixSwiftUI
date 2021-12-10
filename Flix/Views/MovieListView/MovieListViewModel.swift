@@ -32,16 +32,16 @@ final class MovieListViewModel: ObservableObject {
                     self.movies = movies
                 case .failure(let err):
                     switch err {
-                    case .invalidResponse:
+                    case .INVALID_RESPONSE:
                         print("Invalid response!")
                         
-                    case .invalidData:
+                    case .INVALID_DATA:
                         print("Invalid data!")
                         
-                    case .unableToDecode:
+                    case .UNABLE_TO_DECODE:
                         print("Unable to decode!")
                         
-                    case .unableToCreateImage:
+                    case .UNABLE_TO_CREATE_IMAGE:
                         print("Unable to convert Image!")
                     }
                 }

@@ -33,7 +33,7 @@ class MovieImageModel: ObservableObject {
     }
     
     func loadImage() {
-        NetworkManager.shared.getPoserImage(imagePath: movie.backdrop_path) { [self] result in
+        NetworkManager.shared.getBackdropImage(imagePath: movie.backdrop_path) { [self] result in
             switch result {
             case .success(let poster):
                 ImageCache.imageCache.set(forKey: movie.backdrop_path, image: poster )

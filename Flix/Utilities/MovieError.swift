@@ -8,8 +8,8 @@
 import Foundation
 
 enum MovieError: Error {
-    case invalidResponse
-    case invalidData
-    case unableToDecode
-    case unableToCreateImage
+    case INVALID_RESPONSE
+    case INVALID_DATA
+    case UNABLE_TO_DECODE
+    case UNABLE_TO_CREATE_IMAGE
 }

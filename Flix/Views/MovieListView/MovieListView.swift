@@ -1,21 +1,27 @@
 //
-//  ContentView.swift
+//  MainView.swift
 //  Flix
 //
-//  Created by Gerdin Ventura on 12/7/21.
+//  Created by Gerdin Ventura on 12/10/21.
 //
 
 import SwiftUI
 
-struct ContentView: View {
+struct MovieListView: View {
     
     @StateObject private var viewModel = MovieListViewModel()
-         
+
     var body: some View {
+        
         NavigationView {
             List {
                 ForEach(viewModel.movies) { movie in
-                    MovieCell(movie: movie)
+                    NavigationLink {
+                        MovieDetailView(movie: movie)
+                    } label: {
+                        MovieCell(movie: movie)
+                    }
+                    
                 }
             }
             .navigationTitle("Movies")
@@ -23,13 +29,12 @@ struct ContentView: View {
             .onAppear {
                 UITableView.appearance().separatorColor = .clear
             }
-
         }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct MovieListView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        MovieListView()
     }
 }
